@@ -63,8 +63,8 @@
       day = hour * 24,
       t = false;
 
-      let countDown = new Date(<%= @bday.year %>, <%= @bday.mon-1 %>, <%= @bday.day %>).getTime();
-      // let countDown = new Date(2020,0,7,22,50).getTime();
+      // let countDown = new Date(<%= @bday.year %>, <%= @bday.mon-1 %>, <%= @bday.day %>).getTime();
+      let countDown = new Date(2020,0,7,22,58).getTime();
       var x = setInterval(function() {
 
       let now = new Date().getTime(),
@@ -80,6 +80,7 @@
       //do something later when date is reached
       if (distance < 0) {
        clearInterval(x);
+       document.getElementById("bday").innerHTML = "Happy bday <%= @user.name %>...!";
        window.open('<%= bday_path(@user) %>','_self')
        document.getElementById("head").innerHTML = "";
        document.getElementById("countdown_body").innerHTML = "";
