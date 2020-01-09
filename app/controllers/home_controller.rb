@@ -9,6 +9,7 @@ class HomeController < ApplicationController
       else
         collection << [Date.new(Date.today.year+1,user.bday.mon,user.bday.day), user.id]
       end
+      collection.sort!
     end
     collection.sort!
     @bday = (collection[0][0])
@@ -20,4 +21,12 @@ class HomeController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def countdown
+    @user = User.find(params[:id])
+    if Date.new(Date.today.year,@user.bday.mon,@user.bday.day) >= Date.today
+      @bday = Date.new(Date.today.year,@user.bday.mon,@user.bday.day)
+    else
+      @bday = Date.new(Date.today.year+1,@user.bday.mon,@user.bday.day)
+    end
+  end
 end

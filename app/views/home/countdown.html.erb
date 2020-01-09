@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link href="https://fonts.googleapis.com/css?family=Bangers|Shadows+Into+Light&display=swap" rel="stylesheet">
+    <style media="screen">
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #ffd54f;
+      }
+
+      .container {
+        color: #333;
+        text-align: center;
+      }
+
+      h1 {
+        font-weight: normal;
+      }
+
+       /* general styling */
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+      }
+
+      .container {
+        margin: 0 auto;
+      }
+      #head{
+        font-family: 'Bangers', cursive;
+        font-size: 40px;
+      }
+      #countdown_body{
+        font-family: 'Shadows Into Light', cursive;
+        font-size: 100px;
+      }
+      #bday{
+        font-family: 'Bangers', cursive;
+        font-size: 70px;
+      }
+    </style>
+    <script type="text/javascript">
+      const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24,
+      t = false;
+
+      let countDown = new Date(<%= @bday.year %>, <%= @bday.mon-1 %>, <%= @bday.day %>).getTime();
+      // let countDown = new Date(2020,0,7,23,4).getTime();
+      var x = setInterval(function() {
+
+      let now = new Date().getTime(),
+          distance = countDown - now;
+
+      var days = Math.floor(distance / (day)),
+        hours = Math.floor((distance % (day)) / (hour)),
+        minutes = Math.floor((distance % (hour)) / (minute)),
+        seconds = Math.floor((distance % (minute)) / second);
+
+      document.getElementById("countdown_body").innerHTML = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
+
+      //do something later when date is reached
+      if (distance < 0) {
+       clearInterval(x);
+       document.getElementById("bday").innerHTML = "Happy bday <%= @user.name %>...!";
+       window.open('<%= bday_path(@user) %>','_self')
+       document.getElementById("head").innerHTML = "";
+       document.getElementById("countdown_body").innerHTML = "";
+      }
+    }, second)
+    </script>
+  </head>
+  <body>
+    <div class="container">
+          <h1 id='bday'></h1>
+          <h1 id="head">Birthday Countdown:</h1><br><br><br><br><br>
+          <h1 id="countdown_body"></h1>
+        </div>
+  </body>
+</html>
